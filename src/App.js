@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UploadCSVPage from './pages/UploadCSVPage';
+import CardsPage from './pages/CardsPage';
 
 function App() {
 	const [csvData, setCsvData] = useState([]);
@@ -10,7 +11,7 @@ function App() {
 		<Router>
 			<Routes>
 				<Route path="/" element={<UploadCSVPage onCSVUploaded={setCsvData} />} />
-				{/* <Route path="/cards" element={<CardsPage csvData={csvData} />} /> */}
+				<Route path="/cards" element={<CardsPage csvData={csvData} />} />
 			</Routes>
 		</Router>
 	);

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
+import { useNavigate } from 'react-router-dom';
 
 function UploadCSVPage({ onCSVUploaded }) {
 	const [error, setError] = useState('');
 	const [message, setMessage] = useState('');
+	const navigate = useNavigate();
 
 	const handleFileUpload = e => {
 		const file = e.target.files[0];
@@ -20,6 +22,7 @@ function UploadCSVPage({ onCSVUploaded }) {
 				if (result && result.data) {
 					setMessage('Données CSV chargées avec succès.');
 					onCSVUploaded(result.data);
+					navigate('/cards');
 				} else {
 					setError('Erreur : données CSV invalides.');
 				}
