@@ -1,13 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UploadCSVPage from './pages/UploadCSVPage';
 
 function App() {
+	const [csvData, setCsvData] = useState([]);
+	console.log(csvData);
+
 	return (
-		<div className="App">
-			<div className="text-center text-2xl text-blue-500">
-				Tailwind fonctionne !
-			</div>
-		</div>
+		<Router>
+			<Routes>
+				<Route path="/" element={<UploadCSVPage onCSVUploaded={setCsvData} />} />
+				{/* <Route path="/cards" element={<CardsPage csvData={csvData} />} /> */}
+			</Routes>
+		</Router>
 	);
 }
 
