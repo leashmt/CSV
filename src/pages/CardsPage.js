@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CardsPage({ csvData }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [flipped, setFlipped] = useState(false);
+	const [isFlipped, setIsFlipped] = useState(true);
 	const navigate = useNavigate();
 
 	if (!csvData || csvData.length === 0) {
@@ -27,75 +27,66 @@ function CardsPage({ csvData }) {
 	const shuffledAnswers = answers.sort(() => Math.random() - 0.5);
 
 	const handleNext = () => {
-		setFlipped(false);
+		setIsFlipped(false);
 		if (currentQuestionIndex < questions.length - 1) {
 			setCurrentQuestionIndex(prev => prev + 1);
 		}
 	};
 
 	const handlePrevious = () => {
-		setFlipped(false);
+		setIsFlipped(false);
 		if (currentQuestionIndex > 0) {
 			setCurrentQuestionIndex(prev => prev - 1);
 		}
 	};
 
-	console.log(flipped);
+	console.log(isFlipped);
 	return (
 		<div className="flex flex-col items-center justify-center h-screen bg-gray-100">
 			<div
-				className={`relative w-5/6 h-4/6 bg-white border rounded-lg shadow-md transition-transform ${
-					flipped ? 'rotate-y-180' : ''
+				className={`card-inner relative w-5/6 h-4/6 bg-white border rounded-lg shadow-md transition-transform  ${
+					isFlipped ? 'flipped' : ''
 				}`}
-				onClick={() => setFlipped(prev => !prev)}
+				onClick={() => setIsFlipped(prev => !prev)}
 			>
 				{/* Front Side */}
-				{!flipped && (
-					<div className="flex items-center justify-center h-full text-center text-lg font-bold p-4">
-						{currentQuestion}
-					</div>
-				)}
+				<div className="card-front flex items-center justify-center h-full text-center text-lg font-bold p-4">
+					{currentQuestion}
+				</div>
 
 				{/* Back Side */}
-				{flipped && (
-					<div className="flex flex-col items-center justify-center h-full text-center p-4">
-						<h2 className="text-teal-600 font-bold mb-3">
-							{currentQuestion}
-						</h2>
-						<div className="flex-grow max-h-full overflow-y-auto w-5/6">
-							{shuffledAnswers.map((answer, index) => {
-								const answerItems = answer.split(';');
-								return (
-									<div
-										key={index}
-										className={`text-left p-2 mt-2 ${
-											index % 2 === 0
-												? 'bg-teal-100 rounded'
-												: 'bg-white'
-										}`}
-									>
-										{answerItems.length > 1 ? (
-											<ul className="list-disc pl-5">
-												{answerItems.map((item, idx) => (
-													<li
-														key={idx}
-														className="text-sm mb-2"
-													>
-														{item}
-													</li>
-												))}
-											</ul>
-										) : (
-											<p className="text-sm mb-2 text-left">
-												{answer}
-											</p>
-										)}
-									</div>
-								);
-							})}
-						</div>
+				<div
+					className={`card-back flex flex-col items-center justify-center h-full text-center p-4 card-inner`}
+				>
+					<h2 className="text-teal-600 font-bold mb-3">{currentQuestion}</h2>
+					<div className="flex-grow max-h-full overflow-y-auto w-5/6">
+						{shuffledAnswers.map((answer, index) => {
+							const answerItems = answer.split(';');
+							return (
+								<div
+									key={index}
+									className={`text-left p-2 mt-2 ${
+										index % 2 === 0
+											? 'bg-teal-100 rounded'
+											: 'bg-white'
+									}`}
+								>
+									{answerItems.length > 1 ? (
+										<ul className="list-disc pl-5">
+											{answerItems.map((item, idx) => (
+												<li key={idx} className="text-sm mb-2">
+													{item}
+												</li>
+											))}
+										</ul>
+									) : (
+										<p className="text-sm mb-2 text-left">{answer}</p>
+									)}
+								</div>
+							);
+						})}
 					</div>
-				)}
+				</div>
 			</div>
 			{/* Navigation Buttons */}
 			<div className="flex mt-6 justify-end w-5/6">
