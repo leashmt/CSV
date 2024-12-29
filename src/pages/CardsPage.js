@@ -40,26 +40,23 @@ function CardsPage({ csvData }) {
 		}
 	};
 
-	console.log(isFlipped);
 	return (
 		<div className="flex flex-col items-center justify-center h-screen bg-gray-100">
 			<div
-				className={`card-inner relative w-5/6 h-4/6 bg-white border rounded-lg shadow-md transition-transform  ${
+				className={`card-container relative w-5/6 h-4/6 bg-white border rounded-lg shadow-md transition-transform ${
 					isFlipped ? 'flipped' : ''
 				}`}
 				onClick={() => setIsFlipped(prev => !prev)}
 			>
 				{/* Front Side */}
-				<div className="card-front flex items-center justify-center h-full text-center text-lg font-bold p-4">
+				<div className="card-front absolute w-full h-full backface-hidden flex items-center justify-center text-center text-lg font-bold p-4">
 					{currentQuestion}
 				</div>
 
 				{/* Back Side */}
-				<div
-					className={`card-back flex flex-col items-center justify-center h-full text-center p-4 card-inner`}
-				>
+				<div className="card-back absolute w-full h-full backface-hidden flex flex-col items-center text-center p-6">
 					<h2 className="text-teal-600 font-bold mb-3">{currentQuestion}</h2>
-					<div className="flex-grow max-h-full overflow-y-auto w-5/6">
+					<div className="overflow-container max-h-full w-full">
 						{shuffledAnswers.map((answer, index) => {
 							const answerItems = answer.split(';');
 							return (
