@@ -49,20 +49,22 @@ function CardsPage({ csvData }) {
 				onClick={() => setIsFlipped(prev => !prev)}
 			>
 				{/* Front Side */}
-				<div className="card-front absolute w-full h-full backface-hidden flex items-center justify-center text-center text-lg font-bold p-4">
+				<div className="card-front absolute w-full h-full backface-hidden flex items-center justify-center text-center text-4xl font-bold p-4">
 					{currentQuestion}
 				</div>
 
 				{/* Back Side */}
 				<div className="card-back absolute w-full h-full backface-hidden flex flex-col items-center text-center p-6">
-					<h2 className="text-teal-600 font-bold mb-3">{currentQuestion}</h2>
-					<div className="overflow-container max-h-full w-full">
+					<h2 className="text-teal-600 font-bold mb-3 text-xl">
+						{currentQuestion}
+					</h2>
+					<div className="overflow-container max-h-full w-full text-4xl">
 						{shuffledAnswers.map((answer, index) => {
 							const answerItems = answer.split(';');
 							return (
 								<div
 									key={index}
-									className={`text-left p-2 mt-2 ${
+									className={`text-left p-2 mt-2 text-2xl ${
 										index % 2 === 0
 											? 'bg-teal-100 rounded'
 											: 'bg-white'
@@ -71,13 +73,15 @@ function CardsPage({ csvData }) {
 									{answerItems.length > 1 ? (
 										<ul className="list-disc pl-5">
 											{answerItems.map((item, idx) => (
-												<li key={idx} className="text-sm mb-2">
+												<li key={idx} className="text-2xl mb-2">
 													{item}
 												</li>
 											))}
 										</ul>
 									) : (
-										<p className="text-sm mb-2 text-left">{answer}</p>
+										<p className="mb-2 text-left text-2xl">
+											{answer}
+										</p>
 									)}
 								</div>
 							);
